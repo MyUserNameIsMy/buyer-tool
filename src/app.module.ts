@@ -7,6 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrmAsyncConfig } from './config/orm-async.config';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { CompanyModule } from './modules/company/company.module';
+import { TelegrafModule } from 'nestjs-telegraf';
+import { TelegramAsyncConfig } from './config/telegram-async.config';
+import { BotModule } from './modules/bot/bot.module';
 
 @Module({
   imports: [
@@ -21,10 +24,13 @@ import { CompanyModule } from './modules/company/company.module';
       timeout: 0,
       handleSIGTERM: true,
     }),
+    TelegrafModule.forRootAsync(TelegramAsyncConfig),
+
     AuthenticationModule,
     ClairesStoreModule,
     UserModule,
     CompanyModule,
+    BotModule,
   ],
   controllers: [],
   providers: [],

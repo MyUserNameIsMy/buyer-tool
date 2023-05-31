@@ -1,9 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCompanyRequestDto } from './dto/create-company.request.dto';
 import { CompanyEntity } from './entities/company.entity';
 import { dataSource } from '../../config/orm-migration.config';
-import { DataSource, getConnection, getRepository } from 'typeorm';
-
 @Injectable()
 export class CompanyService {
   async create(
@@ -20,10 +18,18 @@ export class CompanyService {
   }
 
   async findProductsByCompanyName(company_table: string) {
-    console.log(company_table);
+    const company = await CompanyEntity.findOne({
+      where: { company_table: company_table },
+    });
+
+    if (!company) throw new BadRequestException('No such table');
+
     await dataSource.initialize();
-    const products = await dataSource.query(`SELECT*FROM ${company_table}`);
+    const products = await dataSource.query(
+      `SELECT*FROM ${company.company_table}`,
+    );
     await dataSource.destroy();
+
     return products;
   }
 }

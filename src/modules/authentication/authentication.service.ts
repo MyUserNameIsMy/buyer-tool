@@ -25,9 +25,9 @@ export class AuthenticationService {
         'phone_number',
       ],
     });
-    console.log(user);
+
     if (!user || !(await compare(username, user.password))) {
-      throw new UnauthorizedException('here');
+      throw new UnauthorizedException('Password or Username is incorrect!');
     }
     return user;
   }

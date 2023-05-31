@@ -18,7 +18,6 @@ import { BotModule } from './modules/bot/bot.module';
     }),
     TypeOrmModule.forRootAsync(OrmAsyncConfig),
     TelegrafModule.forRootAsync(TelegramAsyncConfig),
-
     AuthenticationModule,
     ClairesStoreModule,
     UserModule,

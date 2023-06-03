@@ -55,6 +55,10 @@ export class AuthenticationService {
     const user = new UserEntity();
     user.telegram_id = userRegisterDto.telegram_id;
     user.password = userRegisterDto.telegram_id;
+    user.firstname = userRegisterDto.firstname;
+    user.lastname = userRegisterDto.lastname;
+    user.email = userRegisterDto.email;
+    user.phone_number = userRegisterDto.phone_number;
 
     try {
       await user.save();

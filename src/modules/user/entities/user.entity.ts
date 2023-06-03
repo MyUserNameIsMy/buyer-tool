@@ -1,7 +1,8 @@
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity, OneToMany } from 'typeorm';
 import { RootAbstractEntity } from '../../../database/entities/root-abstract.entity';
 import * as bcrypt from 'bcrypt';
 import { AccountStatusEnum } from '../../../common/enums/account-status.enum';
+import { SharedProductEntity } from '../../shared-product/entities/shared-product.entity';
 
 @Entity('users')
 export class UserEntity extends RootAbstractEntity {
@@ -37,4 +38,11 @@ export class UserEntity extends RootAbstractEntity {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(password || this.password, salt);
   }
+
+  @OneToMany(
+    () => SharedProductEntity,
+    (shared_product) => shared_product.user,
+    { cascade: true },
+  )
+  shared_products: SharedProductEntity[];
 }

@@ -31,11 +31,17 @@ export class SharedProductController {
   async getSharedProductDetail(@Param('token') token: string): Promise<any> {
     return await this.sharedService.getSharedProductDetailFromToken(token);
   }
+
+  @UseGuards(AuthGuard('jwt-user'))
+  @ApiBearerAuth()
   @Post('/generate-shared')
   async generateSharedProductToken(
+    @Request() req,
     @Body() createSharedProductRequestDto: CreateSharedProductRequestDto,
   ): Promise<{ shared_token: string }> {
+    console.log(req.user);
     return this.sharedService.generateSharedProductToken(
+      +req.user.user_id,
       createSharedProductRequestDto,
     );
   }

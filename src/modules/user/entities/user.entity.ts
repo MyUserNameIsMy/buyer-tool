@@ -3,6 +3,7 @@ import { RootAbstractEntity } from '../../../database/entities/root-abstract.ent
 import * as bcrypt from 'bcrypt';
 import { AccountStatusEnum } from '../../../common/enums/account-status.enum';
 import { SharedProductEntity } from '../../shared-product/entities/shared-product.entity';
+import { ApplicationEntity } from '../../application/entities/application.entity';
 
 @Entity('users')
 export class UserEntity extends RootAbstractEntity {
@@ -45,4 +46,9 @@ export class UserEntity extends RootAbstractEntity {
     { cascade: true },
   )
   shared_products: SharedProductEntity[];
+
+  @OneToMany(() => ApplicationEntity, (application) => application.user, {
+    cascade: true,
+  })
+  applications: ApplicationEntity[];
 }

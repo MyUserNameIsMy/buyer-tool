@@ -10,6 +10,7 @@ import { TelegrafModule } from 'nestjs-telegraf';
 import { TelegramAsyncConfig } from './config/telegram-async.config';
 import { BotModule } from './modules/bot/bot.module';
 import { SharedProductModule } from './modules/shared-product/shared-product.module';
+import { ApplicationModule } from './modules/application/application.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { SharedProductModule } from './modules/shared-product/shared-product.mod
     CompanyModule,
     BotModule,
     SharedProductModule,
+    ApplicationModule,
   ],
   controllers: [],
   providers: [],

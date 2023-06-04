@@ -3,6 +3,7 @@ import { CreateSharedProductRequestDto } from './dto/create-shared-product.reque
 import { SharedProductEntity } from './entities/shared-product.entity';
 import { UserEntity } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import * as process from 'process';
 
 @Injectable()
 export class SharedProductService {
@@ -30,19 +31,25 @@ export class SharedProductService {
     return this.jwtService.decode(token);
   }
   async generateSharedProductToken(
+    buyer_id: number,
     createSharedProductDto: CreateSharedProductRequestDto,
   ): Promise<{ shared_token: string }> {
     const shared_product = new SharedProductEntity();
 
-    const user = await UserEntity.findOne({
-      where: { telegram_id: createSharedProductDto.user.telegram_id },
-    });
+    const user = await UserEntity.findOne({ where: { id: buyer_id } });
     if (!user) throw new BadRequestException('No such user!');
+
     shared_product.user = user;
 
     const token = this.jwtService.sign(
       {
-        user: createSharedProductDto.user,
+        user: {
+          telegram_id: user.telegram_id,
+          email: user.email,
+          phone_number: user.phone_number,
+          firstname: user.firstname,
+          lastname: user.lastname,
+        },
         product: createSharedProductDto.product,
         buyer_price: createSharedProductDto.buyer_price,
       },

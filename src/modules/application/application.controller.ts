@@ -12,8 +12,7 @@ import { ApplicationService } from './application.service';
 import { CreateApplicationRequestDto } from './dto/create-application-request.dto';
 import { ApplicationEntity } from './entities/application.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
-import { ApplicationStatusEnum } from '../../common/enums/application-status.enum';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ChangeApplicationStatusRequestDto } from '../user/dto/change-application-status.request.dto';
 
 @ApiTags('Application')
